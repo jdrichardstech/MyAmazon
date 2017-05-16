@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { LoginForm } from './components'
-import { Header } from './components/common'
+import { Header, Spinner, Button, Card, CardSection} from './components/common'
 import firebase from 'firebase'
-import { View, Text } from 'react-native'
+import { View, Text, ScrollView } from 'react-native'
 
 
 
@@ -30,13 +30,40 @@ class App extends Component{
 			}
 		})
 	}
+
+	renderContent(){
+		switch(this.state.loggedIn){
+			case true:
+			return(
+				<ScrollView>
+					<Header headerText="My Amazon Purchases" />
+					<Card>
+						<CardSection>
+							<Button onPress={() => firebase.auth().signOut()}>
+								Log Out
+							</Button>
+						</CardSection>
+					</Card>
+				</ScrollView>
+			)
+			case false:
+			return(
+				<View>
+					<Header headerText="Sign In or SIgn Up" />
+					<LoginForm />
+				</View>
+			)
+			default:
+			return <Spinner size="large" />
+		}
+	}
+
 	render(){
 		return(
 
-			<View>
-				<Header headerText = "Sign In Or Sign Up" />
-				<LoginForm />
-			</View>
+			<ScrollView>
+				{this.renderContent()}
+			</ScrollView>
 		)
 	}
 }
