@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { LoginForm } from './components'
+import { LoginForm, ProductList} from './components'
 import { Header, Spinner, Button, Card, CardSection} from './components/common'
 import firebase from 'firebase'
 import { View, Text, ScrollView } from 'react-native'
@@ -34,33 +34,34 @@ class App extends Component{
 	renderContent(){
 		switch(this.state.loggedIn){
 			case true:
-			return(
-				<ScrollView>
-					<Header headerText="My Amazon Purchases" />
-					<Card>
-						<CardSection>
-							<Button onPress={() => firebase.auth().signOut()}>
-								Log Out
-							</Button>
-						</CardSection>
-					</Card>
-				</ScrollView>
-			)
+				return(
+					<ScrollView>
+						<Header headerText="My Amazon Purchases" />
+						<Card>
+							<CardSection>
+								<Button onPress={() => firebase.auth().signOut()}>
+									Log Out
+								</Button>
+							</CardSection>
+							<CardSection>
+								<ProductList />
+							</CardSection>
+						</Card>
+					</ScrollView>
+				)
 			case false:
-			return(
-				<View>
-					<Header headerText="Sign In or SIgn Up" />
-					<LoginForm />
-				</View>
-			)
+				return(
+					<View>
+						<Header headerText="Sign In or SIgn Up" />
+						<LoginForm />
+					</View>
+				)
 			default:
 			return <Spinner size="large" />
 		}
 	}
-
 	render(){
 		return(
-
 			<ScrollView>
 				{this.renderContent()}
 			</ScrollView>
