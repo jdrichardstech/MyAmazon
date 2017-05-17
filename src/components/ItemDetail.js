@@ -21,7 +21,7 @@ const ProductItem = ({item}) => {
 					/>
 			</CardSection>
 			<CardSection>
-				<Button onPress={()=>Linking.opeURL(url)}>
+				<Button onPress={()=>Linking.openURL(url)}>
 					<Text>Buy Again</Text>
 				</Button>
 			</CardSection>

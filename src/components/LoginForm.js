@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import firebase from 'firebase'
-import { Text, ScrollView, View  } from 'react-native'
+import { Text, ScrollView, View,Image } from 'react-native'
 import { Card, CardSection, Input, Button, Spinner } from './common'
 
 
@@ -22,7 +22,12 @@ class LoginForm extends Component{
 
 		firebase.auth().signInWithEmailAndPassword(email, password)
 		.then(this.onLoginSuccess.bind(this))
-		.catch(this.onLoginFail.bind(this))
+		.catch(() => {
+			firebase.auth().createUserWithEmailAndPassword(email,password)
+			.then(this.onLoginSuccess.bind(this))
+			.catch(this.onLoginFail.bind(this))
+		})
+
 	}
 
 	onLoginSuccess(){
@@ -56,6 +61,16 @@ class LoginForm extends Component{
 		return(
 			<Card>
 				<CardSection>
+					<Image style={styles.imageStyle} source={require("../assets/images/amazon.jpg")} />
+				</CardSection>
+				<CardSection>
+					<View>
+						<Text style={styles.openingText}>
+							Log with an email@me.com and a 6 digit password to view my Amazon Items
+						</Text>
+					</View>
+				</CardSection>
+				<CardSection>
 					<Input
 						placeholder="user@me.com"
 						label="Email"
@@ -86,7 +101,21 @@ const styles={
 		fontSize:30,
 		alignSelf: 'center',
 		color: 'red'
-	}
+	},
+	openingStyleText:{
+		fontSize:20,
+		color:'gray',
+		alignSelf:'center'
+	},
+	imageStyle: {
+	height: 150,
+	flex:3,
+	marginTop:10,
+	marginBottom:10,
+	marginLeft:12,
+	marginRight:12
+}
+
 }
 
 export default LoginForm

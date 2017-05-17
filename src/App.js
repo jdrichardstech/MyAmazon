@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { LoginForm, ProductList} from './components'
 import { Header, Spinner, Button, Card, CardSection} from './components/common'
 import firebase from 'firebase'
-import { View, Text, ScrollView } from 'react-native'
+import { View, Text, ScrollView, Image } from 'react-native'
 
 
 
@@ -39,6 +39,9 @@ class App extends Component{
 						<Header headerText="My Amazon Purchases" />
 						<Card>
 							<CardSection>
+								<Image style={styles.imageStyle} source={require("./assets/images/amazon.jpg")} />
+							</CardSection>
+							<CardSection>
 								<Button onPress={() => firebase.auth().signOut()}>
 									Log Out
 								</Button>
@@ -67,6 +70,17 @@ class App extends Component{
 			</ScrollView>
 		)
 	}
+}
+
+const styles={
+	imageStyle: {
+	height: 150,
+	flex:3,
+	marginTop:10,
+	marginBottom:10,
+	marginLeft:12,
+	marginRight:12
+}
 }
 
 export default App
